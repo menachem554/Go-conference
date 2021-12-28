@@ -1,0 +1,36 @@
+// protoc --go_out=. --go_opt=paths=source_relative --go-grpc_out=. --go-grpc_opt=paths=source_relative proto.proto
+
+syntax = "proto3";
+
+package backend;
+
+option go_package = "github.com/menachem554/go_conference";
+
+service Bookstore {
+    rpc PostNewOrder(UserDataReq) returns (UserDataRes);
+    rpc GetOrder(GetOrderReq) returns (UserDataRes);
+    rpc UpdateOrder(UpdateOrderRequest) returns (UserDataRes);
+    rpc DeleteOrder(GetOrderReq) returns (DeleteOrderRes);
+    rpc GetAllOrder(GetAllOrderReq) returns (GetAllOrderRes);
+}
+
+message UserData {
+    string firstName= 1;
+    string lastName = 2;
+    string email = 3;
+    uint32 numberOfTicket = 4;
+}
+
+message UserDataReq {UserData userData = 1;} 
+
+message UserDataRes {UserData userData = 1;}
+
+message GetOrderReq {string email = 1;}
+
+message UpdateOrderRequest {uint32 numberOfTicketd = 1;}
+
+message DeleteOrderRes {int64 deleted = 1;}
+
+message GetAllOrderReq {};
+
+message GetAllOrderRes {repeated UserData userData = 1;}

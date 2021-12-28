@@ -4,7 +4,7 @@ syntax = "proto3";
 
 package backend;
 
-option go_package = "github.com/menachem554/go_conference";
+option go_package = "github.com/menachem554/Go-conference/backend";
 
 service Bookstore {
     rpc PostNewOrder(UserDataReq) returns (UserDataRes);

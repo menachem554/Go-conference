@@ -14,230 +14,266 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// BookstoreClient is the client API for Bookstore service.
+// GoConferenceClient is the client API for GoConference service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type BookstoreClient interface {
+type GoConferenceClient interface {
 	PostNewOrder(ctx context.Context, in *UserDataReq, opts ...grpc.CallOption) (*UserDataRes, error)
 	GetOrder(ctx context.Context, in *GetOrderReq, opts ...grpc.CallOption) (*UserDataRes, error)
 	UpdateOrder(ctx context.Context, in *UpdateOrderRequest, opts ...grpc.CallOption) (*UserDataRes, error)
 	DeleteOrder(ctx context.Context, in *GetOrderReq, opts ...grpc.CallOption) (*DeleteOrderRes, error)
 	GetAllOrder(ctx context.Context, in *GetAllOrderReq, opts ...grpc.CallOption) (*GetAllOrderRes, error)
+	GetTicketNumber(ctx context.Context, in *GetAllOrderReq, opts ...grpc.CallOption) (*TicketNumberRes, error)
 }
 
-type bookstoreClient struct {
+type goConferenceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewBookstoreClient(cc grpc.ClientConnInterface) BookstoreClient {
-	return &bookstoreClient{cc}
+func NewGoConferenceClient(cc grpc.ClientConnInterface) GoConferenceClient {
+	return &goConferenceClient{cc}
 }
 
-func (c *bookstoreClient) PostNewOrder(ctx context.Context, in *UserDataReq, opts ...grpc.CallOption) (*UserDataRes, error) {
+func (c *goConferenceClient) PostNewOrder(ctx context.Context, in *UserDataReq, opts ...grpc.CallOption) (*UserDataRes, error) {
 	out := new(UserDataRes)
-	err := c.cc.Invoke(ctx, "/backend.Bookstore/PostNewOrder", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/backend.GoConference/PostNewOrder", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *bookstoreClient) GetOrder(ctx context.Context, in *GetOrderReq, opts ...grpc.CallOption) (*UserDataRes, error) {
+func (c *goConferenceClient) GetOrder(ctx context.Context, in *GetOrderReq, opts ...grpc.CallOption) (*UserDataRes, error) {
 	out := new(UserDataRes)
-	err := c.cc.Invoke(ctx, "/backend.Bookstore/GetOrder", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/backend.GoConference/GetOrder", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *bookstoreClient) UpdateOrder(ctx context.Context, in *UpdateOrderRequest, opts ...grpc.CallOption) (*UserDataRes, error) {
+func (c *goConferenceClient) UpdateOrder(ctx context.Context, in *UpdateOrderRequest, opts ...grpc.CallOption) (*UserDataRes, error) {
 	out := new(UserDataRes)
-	err := c.cc.Invoke(ctx, "/backend.Bookstore/UpdateOrder", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/backend.GoConference/UpdateOrder", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *bookstoreClient) DeleteOrder(ctx context.Context, in *GetOrderReq, opts ...grpc.CallOption) (*DeleteOrderRes, error) {
+func (c *goConferenceClient) DeleteOrder(ctx context.Context, in *GetOrderReq, opts ...grpc.CallOption) (*DeleteOrderRes, error) {
 	out := new(DeleteOrderRes)
-	err := c.cc.Invoke(ctx, "/backend.Bookstore/DeleteOrder", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/backend.GoConference/DeleteOrder", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *bookstoreClient) GetAllOrder(ctx context.Context, in *GetAllOrderReq, opts ...grpc.CallOption) (*GetAllOrderRes, error) {
+func (c *goConferenceClient) GetAllOrder(ctx context.Context, in *GetAllOrderReq, opts ...grpc.CallOption) (*GetAllOrderRes, error) {
 	out := new(GetAllOrderRes)
-	err := c.cc.Invoke(ctx, "/backend.Bookstore/GetAllOrder", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/backend.GoConference/GetAllOrder", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// BookstoreServer is the server API for Bookstore service.
-// All implementations must embed UnimplementedBookstoreServer
+func (c *goConferenceClient) GetTicketNumber(ctx context.Context, in *GetAllOrderReq, opts ...grpc.CallOption) (*TicketNumberRes, error) {
+	out := new(TicketNumberRes)
+	err := c.cc.Invoke(ctx, "/backend.GoConference/GetTicketNumber", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// GoConferenceServer is the server API for GoConference service.
+// All implementations must embed UnimplementedGoConferenceServer
 // for forward compatibility
-type BookstoreServer interface {
+type GoConferenceServer interface {
 	PostNewOrder(context.Context, *UserDataReq) (*UserDataRes, error)
 	GetOrder(context.Context, *GetOrderReq) (*UserDataRes, error)
 	UpdateOrder(context.Context, *UpdateOrderRequest) (*UserDataRes, error)
 	DeleteOrder(context.Context, *GetOrderReq) (*DeleteOrderRes, error)
 	GetAllOrder(context.Context, *GetAllOrderReq) (*GetAllOrderRes, error)
-	mustEmbedUnimplementedBookstoreServer()
+	GetTicketNumber(context.Context, *GetAllOrderReq) (*TicketNumberRes, error)
+	mustEmbedUnimplementedGoConferenceServer()
 }
 
-// UnimplementedBookstoreServer must be embedded to have forward compatible implementations.
-type UnimplementedBookstoreServer struct {
+// UnimplementedGoConferenceServer must be embedded to have forward compatible implementations.
+type UnimplementedGoConferenceServer struct {
 }
 
-func (UnimplementedBookstoreServer) PostNewOrder(context.Context, *UserDataReq) (*UserDataRes, error) {
+func (UnimplementedGoConferenceServer) PostNewOrder(context.Context, *UserDataReq) (*UserDataRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PostNewOrder not implemented")
 }
-func (UnimplementedBookstoreServer) GetOrder(context.Context, *GetOrderReq) (*UserDataRes, error) {
+func (UnimplementedGoConferenceServer) GetOrder(context.Context, *GetOrderReq) (*UserDataRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetOrder not implemented")
 }
-func (UnimplementedBookstoreServer) UpdateOrder(context.Context, *UpdateOrderRequest) (*UserDataRes, error) {
+func (UnimplementedGoConferenceServer) UpdateOrder(context.Context, *UpdateOrderRequest) (*UserDataRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateOrder not implemented")
 }
-func (UnimplementedBookstoreServer) DeleteOrder(context.Context, *GetOrderReq) (*DeleteOrderRes, error) {
+func (UnimplementedGoConferenceServer) DeleteOrder(context.Context, *GetOrderReq) (*DeleteOrderRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteOrder not implemented")
 }
-func (UnimplementedBookstoreServer) GetAllOrder(context.Context, *GetAllOrderReq) (*GetAllOrderRes, error) {
+func (UnimplementedGoConferenceServer) GetAllOrder(context.Context, *GetAllOrderReq) (*GetAllOrderRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAllOrder not implemented")
 }
-func (UnimplementedBookstoreServer) mustEmbedUnimplementedBookstoreServer() {}
+func (UnimplementedGoConferenceServer) GetTicketNumber(context.Context, *GetAllOrderReq) (*TicketNumberRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetTicketNumber not implemented")
+}
+func (UnimplementedGoConferenceServer) mustEmbedUnimplementedGoConferenceServer() {}
 
-// UnsafeBookstoreServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to BookstoreServer will
+// UnsafeGoConferenceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to GoConferenceServer will
 // result in compilation errors.
-type UnsafeBookstoreServer interface {
-	mustEmbedUnimplementedBookstoreServer()
+type UnsafeGoConferenceServer interface {
+	mustEmbedUnimplementedGoConferenceServer()
 }
 
-func RegisterBookstoreServer(s grpc.ServiceRegistrar, srv BookstoreServer) {
-	s.RegisterService(&Bookstore_ServiceDesc, srv)
+func RegisterGoConferenceServer(s grpc.ServiceRegistrar, srv GoConferenceServer) {
+	s.RegisterService(&GoConference_ServiceDesc, srv)
 }
 
-func _Bookstore_PostNewOrder_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _GoConference_PostNewOrder_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UserDataReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(BookstoreServer).PostNewOrder(ctx, in)
+		return srv.(GoConferenceServer).PostNewOrder(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/backend.Bookstore/PostNewOrder",
+		FullMethod: "/backend.GoConference/PostNewOrder",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BookstoreServer).PostNewOrder(ctx, req.(*UserDataReq))
+		return srv.(GoConferenceServer).PostNewOrder(ctx, req.(*UserDataReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Bookstore_GetOrder_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _GoConference_GetOrder_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetOrderReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(BookstoreServer).GetOrder(ctx, in)
+		return srv.(GoConferenceServer).GetOrder(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/backend.Bookstore/GetOrder",
+		FullMethod: "/backend.GoConference/GetOrder",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BookstoreServer).GetOrder(ctx, req.(*GetOrderReq))
+		return srv.(GoConferenceServer).GetOrder(ctx, req.(*GetOrderReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Bookstore_UpdateOrder_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _GoConference_UpdateOrder_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UpdateOrderRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(BookstoreServer).UpdateOrder(ctx, in)
+		return srv.(GoConferenceServer).UpdateOrder(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/backend.Bookstore/UpdateOrder",
+		FullMethod: "/backend.GoConference/UpdateOrder",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BookstoreServer).UpdateOrder(ctx, req.(*UpdateOrderRequest))
+		return srv.(GoConferenceServer).UpdateOrder(ctx, req.(*UpdateOrderRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Bookstore_DeleteOrder_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _GoConference_DeleteOrder_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetOrderReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(BookstoreServer).DeleteOrder(ctx, in)
+		return srv.(GoConferenceServer).DeleteOrder(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/backend.Bookstore/DeleteOrder",
+		FullMethod: "/backend.GoConference/DeleteOrder",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BookstoreServer).DeleteOrder(ctx, req.(*GetOrderReq))
+		return srv.(GoConferenceServer).DeleteOrder(ctx, req.(*GetOrderReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Bookstore_GetAllOrder_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _GoConference_GetAllOrder_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetAllOrderReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(BookstoreServer).GetAllOrder(ctx, in)
+		return srv.(GoConferenceServer).GetAllOrder(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/backend.Bookstore/GetAllOrder",
+		FullMethod: "/backend.GoConference/GetAllOrder",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BookstoreServer).GetAllOrder(ctx, req.(*GetAllOrderReq))
+		return srv.(GoConferenceServer).GetAllOrder(ctx, req.(*GetAllOrderReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// Bookstore_ServiceDesc is the grpc.ServiceDesc for Bookstore service.
+func _GoConference_GetTicketNumber_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetAllOrderReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GoConferenceServer).GetTicketNumber(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/backend.GoConference/GetTicketNumber",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GoConferenceServer).GetTicketNumber(ctx, req.(*GetAllOrderReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// GoConference_ServiceDesc is the grpc.ServiceDesc for GoConference service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var Bookstore_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "backend.Bookstore",
-	HandlerType: (*BookstoreServer)(nil),
+var GoConference_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "backend.GoConference",
+	HandlerType: (*GoConferenceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "PostNewOrder",
-			Handler:    _Bookstore_PostNewOrder_Handler,
+			Handler:    _GoConference_PostNewOrder_Handler,
 		},
 		{
 			MethodName: "GetOrder",
-			Handler:    _Bookstore_GetOrder_Handler,
+			Handler:    _GoConference_GetOrder_Handler,
 		},
 		{
 			MethodName: "UpdateOrder",
-			Handler:    _Bookstore_UpdateOrder_Handler,
+			Handler:    _GoConference_UpdateOrder_Handler,
 		},
 		{
 			MethodName: "DeleteOrder",
-			Handler:    _Bookstore_DeleteOrder_Handler,
+			Handler:    _GoConference_DeleteOrder_Handler,
 		},
 		{
 			MethodName: "GetAllOrder",
-			Handler:    _Bookstore_GetAllOrder_Handler,
+			Handler:    _GoConference_GetAllOrder_Handler,
+		},
+		{
+			MethodName: "GetTicketNumber",
+			Handler:    _GoConference_GetTicketNumber_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

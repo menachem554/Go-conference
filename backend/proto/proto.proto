@@ -6,12 +6,15 @@ package backend;
 
 option go_package = "github.com/menachem554/Go-conference/backend";
 
-service Bookstore {
+service GoConference {
     rpc PostNewOrder(UserDataReq) returns (UserDataRes);
     rpc GetOrder(GetOrderReq) returns (UserDataRes);
     rpc UpdateOrder(UpdateOrderRequest) returns (UserDataRes);
     rpc DeleteOrder(GetOrderReq) returns (DeleteOrderRes);
     rpc GetAllOrder(GetAllOrderReq) returns (GetAllOrderRes);
+    rpc GetTicketNumber(GetAllOrderReq) returns (TicketNumberRes);
+
+
 }
 
 message UserData {
@@ -27,10 +30,14 @@ message UserDataRes {UserData userData = 1;}
 
 message GetOrderReq {string email = 1;}
 
-message UpdateOrderRequest {uint32 numberOfTicketd = 1;}
+message UpdateOrderRequest {
+    uint32 numberOfTicketd = 1;
+    string email = 2;}
 
 message DeleteOrderRes {int64 deleted = 1;}
 
 message GetAllOrderReq {};
 
 message GetAllOrderRes {repeated UserData userData = 1;}
+
+message TicketNumberRes {repeated uint32 numberOfTicketd = 1;}

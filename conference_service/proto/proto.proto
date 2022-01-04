@@ -2,9 +2,9 @@
 
 syntax = "proto3";
 
-package conference_service;
+package proto;
 
-option go_package = "github.com/menachem554/Go-conference/conference_service";
+option go_package = "github.com/menachem554/Go-conference/conference_service/proto";
 
 service GoConference {
     rpc PostNewOrder(UserDataReq) returns (UserDataRes);

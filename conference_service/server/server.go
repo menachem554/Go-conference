@@ -7,7 +7,7 @@ import (
 	"os"
 	"os/signal"
 
-	pb "github.com/menachem554/Go-conference/backend/proto"
+	pb "github.com/menachem554/Go-conference/"
 	"google.golang.org/grpc"
 )
 
